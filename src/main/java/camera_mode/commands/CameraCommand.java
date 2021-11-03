@@ -10,10 +10,9 @@ import net.minecraft.world.GameMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CameraMod {
+public class CameraCommand {
 
     public static final Logger CAMERA_LOGGER = LogManager.getLogger();
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher)
     {
         dispatcher.register((CommandManager.literal("cam")
@@ -29,9 +28,11 @@ public class CameraMod {
                         swapSurvival(source);
                     else if (player.interactionManager.getGameMode() != GameMode.SURVIVAL && player.interactionManager.getGameMode() != GameMode.SPECTATOR) {
                         player.sendMessage(new LiteralText("You must be in survival mode to swap to camera mode"), true);
+                        return 0;
                     }
                     else {
                         player.sendMessage(new LiteralText("You may only swap back to survival mode from spectator mode if you entered camera mode beforehand"), true);
+                        return 0;
                     }
                     return 1;
                 }));

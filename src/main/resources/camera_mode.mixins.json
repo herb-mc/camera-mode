@@ -6,10 +6,10 @@
   "mixins": [
     "LivingEntityMixin",
     "ServerPlayerEntityMixin",
+    "CommandManagerMixin",
     "ServerPlayNetworkHandlerMixin"
   ],
   "client": [
-    "CommandManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
