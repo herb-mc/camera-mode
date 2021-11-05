@@ -80,9 +80,8 @@ public class CameraConfig {
                     String[] fields = line.replaceAll("[\\r\\n]", "").split(":\\s");
                     if (defaultContains(fields[0])) {
                         if (fields.length > 1) {
-                            if (CameraMod.configMaps.get(fields[0]).getValue() instanceof Boolean)
-                                if (parseBool(fields[0], fields[1]) != null)
-                                    CameraMod.configMaps.get(fields[0]).setValue(parseBool(fields[0], fields[1]));
+                            if (CameraMod.configMaps.get(fields[0]).getValue() instanceof Boolean && parseBool(fields[0], fields[1]) != null)
+                                CameraMod.configMaps.get(fields[0]).setValue(parseBool(fields[0], fields[1]));
                             else if (CameraMod.configMaps.get(fields[0]).getValue() instanceof Integer)
                                 try {
                                     Integer.parseInt(fields[1]);
