@@ -43,7 +43,7 @@ public class CameraConfigCommand {
                     String temp = context.getArgument("value", String.class);
                     CameraMod.configMaps.get(context.getArgument("option", String.class)).setValue((Arrays.asList(CameraMod.bool).contains(temp)) ? Boolean.parseBoolean(temp) : Integer.parseInt(temp));
                     context.getSource().getPlayer().sendMessage(new LiteralText(context.getArgument("option", String.class) + " set to " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
-                    CameraMod.CAMERA_LOGGER.info("{}: value of '{}' set to {}", context.getSource().getPlayer().getDisplayName(), context.getArgument("option", String.class), context.getArgument("value", String.class));
+                    CameraMod.CAMERA_LOGGER.info("{}: value of '{}' set to {}", context.getSource().getPlayer().getDisplayName().asString(), context.getArgument("option", String.class), context.getArgument("value", String.class));
                     try {
                         CameraConfig.overwriteSettingToConf(context.getArgument("option", String.class), temp, context.getSource().getServer());
                     } catch (IOException e) {
