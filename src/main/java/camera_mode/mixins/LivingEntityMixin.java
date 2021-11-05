@@ -17,7 +17,7 @@ public class LivingEntityMixin {
             cancellable = true
     )
     protected void disableCameraStatus(CallbackInfo ci) {
-        if ((Object) this instanceof ServerPlayerEntity && ((ServerPlayerEntity) (Object) this).isSpectator() && ((ServerPlayerEntityMixinAccess) this).camMode())
+        if ((Object) this instanceof ServerPlayerEntity && ((LivingEntity) (Object) this).isSpectator() && ((ServerPlayerEntityMixinAccess) this).camMode())
             ci.cancel();
     }
 

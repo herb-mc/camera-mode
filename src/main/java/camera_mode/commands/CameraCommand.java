@@ -1,4 +1,6 @@
 package camera_mode.commands;
+
+import camera_mode.helper.CameraMod;
 import camera_mode.helper.ServerPlayerEntityMixinAccess;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -7,17 +9,14 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.world.GameMode;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CameraCommand {
 
-    public static final Logger CAMERA_LOGGER = LogManager.getLogger();
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher)
     {
         dispatcher.register((CommandManager.literal("cam")
                 .requires((serverCommandSource) ->
-                        serverCommandSource.hasPermissionLevel(2) &&
+                        serverCommandSource.hasPermissionLevel(CameraMod.defaultPermissionLevel.getInt()) &&
                         serverCommandSource.getEntity() instanceof ServerPlayerEntity))
                 .executes((context) -> {
                     ServerCommandSource source = context.getSource();
@@ -44,7 +43,8 @@ public class CameraCommand {
             player.sendMessage(new LiteralText("Exit vehicles before entering camera mode"), true);
         } else {
             player.sendMessage(new LiteralText("Entering camera mode"), true);
-            CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().asString());
+            if (CameraMod.consoleLogging.getBool())
+                CameraMod.CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().asString());
             ((ServerPlayerEntityMixinAccess) player).storedData(false, player.getServerWorld(), player.getX(),
                     player.getY(), player.getZ(), player.getYaw(), player.getPitch());
             player.changeGameMode(GameMode.SPECTATOR);

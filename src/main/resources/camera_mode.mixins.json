@@ -4,9 +4,10 @@
   "package": "camera_mode.mixins",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "LivingEntityMixin",
-    "ServerPlayerEntityMixin",
     "CommandManagerMixin",
+    "LivingEntityMixin",
+    "MinecraftServerMixin",
+    "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin"
   ],
   "client": [

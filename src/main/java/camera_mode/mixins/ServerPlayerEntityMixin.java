@@ -1,5 +1,6 @@
 package camera_mode.mixins;
 
+import camera_mode.helper.CameraMod;
 import camera_mode.helper.ServerPlayerEntityMixinAccess;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
@@ -18,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
+
+import static camera_mode.helper.CameraMod.CAMERA_LOGGER;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin implements ServerPlayerEntityMixinAccess {
@@ -90,10 +93,12 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityMixinAccess {
             cancellable = true
     )
     protected void disableCamEntitySpectating(Entity target, CallbackInfo ci) {
-        if (camMode) {
+        if (camMode && !CameraMod.canSpectate.getBool()) {
             ((ServerPlayerEntity) (Object) this).sendMessage(new LiteralText("Entity spectating is disabled in camera mode"), true);
             ci.cancel();
         }
+        else if (CameraMod.consoleLogging.getBool())
+            CAMERA_LOGGER.info("{} is spectating {}", ((ServerPlayerEntity) (Object) this).getDisplayName().asString(), target.getDisplayName().asString().isEmpty() ? target.getEntityName() : target.getDisplayName().asString());
     }
 
     @Inject(
