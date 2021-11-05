@@ -18,20 +18,28 @@ public class CameraConfigCommand {
     {
         dispatcher.register((CommandManager.literal("camera-config")
             .requires((serverCommandSource) ->
-                serverCommandSource.hasPermissionLevel(0)))
+                serverCommandSource.hasPermissionLevel(CameraMod.defaultPermissionLevel.getInt())))
             .then(CommandManager.literal("get")
             .executes((context) -> {
                 for (String option : CameraMod.configSuggestions)
-                    context.getSource().getPlayer().sendMessage(new LiteralText(option + ": " + CameraMod.configMaps.get(option).getAsString()), false);
+                    context.getSource().sendFeedback(new LiteralText(option + ": " + CameraMod.configMaps.get(option).getAsString()), false);
                 return 1;
             })
             .then(CommandManager.argument("option", StringArgumentType.string())
                 .suggests((context,builder) -> CommandSource.suggestMatching(CameraMod.configSuggestions,builder))
                 .executes((context) -> {
-                    context.getSource().getPlayer().sendMessage(new LiteralText(context.getArgument("option", String.class) + ": " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
+                    context.getSource().sendFeedback(new LiteralText(context.getArgument("option", String.class) + ": " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
                     return 1;
                 })
             ))
+            .then(CommandManager.literal("reload")
+            .requires((serverCommandSource) ->
+                    serverCommandSource.hasPermissionLevel(4))
+            .executes((context) -> {
+                context.getSource().sendFeedback(new LiteralText("Reloading configurations"), true);
+                CameraConfig.loadConf(context.getSource().getServer());
+                return 1;
+            }))
             .then(CommandManager.literal("set")
             .requires((serverCommandSource) ->
                 serverCommandSource.hasPermissionLevel(4))
@@ -42,8 +50,8 @@ public class CameraConfigCommand {
                 .executes((context) -> {
                     String temp = context.getArgument("value", String.class);
                     CameraMod.configMaps.get(context.getArgument("option", String.class)).setValue((Arrays.asList(CameraMod.bool).contains(temp)) ? Boolean.parseBoolean(temp) : Integer.parseInt(temp));
-                    context.getSource().getPlayer().sendMessage(new LiteralText(context.getArgument("option", String.class) + " set to " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
-                    CameraMod.CAMERA_LOGGER.info("{}: value of '{}' set to {}", context.getSource().getPlayer().getDisplayName().asString(), context.getArgument("option", String.class), context.getArgument("value", String.class));
+                    context.getSource().sendFeedback(new LiteralText(context.getArgument("option", String.class) + " set to " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
+                    CameraMod.CAMERA_LOGGER.info("{}: value of '{}' set to {}", context.getSource().getDisplayName().asString(), context.getArgument("option", String.class), context.getArgument("value", String.class));
                     try {
                         CameraConfig.overwriteSettingToConf(context.getArgument("option", String.class), temp, context.getSource().getServer());
                     } catch (IOException e) {
