@@ -17,8 +17,7 @@ public class CameraConfigCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher)
     {
         dispatcher.register((CommandManager.literal("camera-config")
-            .requires((serverCommandSource) ->
-                serverCommandSource.hasPermissionLevel(CameraMod.defaultPermissionLevel.getInt())))
+            .requires((serverCommandSource) -> serverCommandSource.hasPermissionLevel(CameraMod.defaultPermissionLevel.getInt())))
             .then(CommandManager.literal("get")
             .executes((context) -> {
                 for (String option : CameraMod.configSuggestions)
@@ -33,16 +32,14 @@ public class CameraConfigCommand {
                 })
             ))
             .then(CommandManager.literal("reload")
-            .requires((serverCommandSource) ->
-                    serverCommandSource.hasPermissionLevel(4))
+            .requires((serverCommandSource) -> serverCommandSource.hasPermissionLevel(4))
             .executes((context) -> {
                 context.getSource().sendFeedback(new LiteralText("Reloading configurations"), true);
                 CameraConfig.loadConf(context.getSource().getServer());
                 return 1;
             }))
             .then(CommandManager.literal("set")
-            .requires((serverCommandSource) ->
-                serverCommandSource.hasPermissionLevel(4))
+            .requires((serverCommandSource) -> serverCommandSource.hasPermissionLevel(4))
             .then(CommandManager.argument("option", StringArgumentType.string())
             .suggests((context,builder) -> CommandSource.suggestMatching(CameraMod.configSuggestions,builder))
                 .then(CommandManager.argument("value", StringArgumentType.string())
