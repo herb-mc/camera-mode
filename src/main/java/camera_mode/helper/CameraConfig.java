@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class CameraConfig {
@@ -123,13 +124,8 @@ public class CameraConfig {
         return false;
     }
 
-    private static ArrayList<String> defaultOpts() {
-        ArrayList<String> t = new ArrayList<>();
-        t.add("canTeleport");
-        t.add("canSpectate");
-        t.add("consoleLogging");
-        t.add("defaultPermissionLevel");
-        return t;
+    public static ArrayList<String> defaultOpts() {
+        return new ArrayList<>(Arrays.asList(CameraMod.configSuggestions));
     }
 
     private static Constable parseBool(String key, String value) {

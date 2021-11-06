@@ -6,6 +6,7 @@ A survival-friendly spectator mode with configurable restrictions, based off of 
 A configuration file (path: `.minecraft/saves/[save]/camera_mode.conf`) will be generated in your save directory if it does not exist yet on world loading. This can be edited directly or in-game via command.\
 \
 Settings:\
+`cameraGeneratesChunks` - Whether camera mode players will load/generate chunks. Has precedence over the spectatorsGenerateChunks gamerule. Default: `true`\
 `canSpectate` - Whether camera mode players will be able to spectate entities. Default: `false`\
 `canTeleport` - Whether camera mode players will be able to teleport to other players. Default: `false`\
 `consoleLogging` - Whether camera mode should output certain player actions to the console. Default: `false`\
