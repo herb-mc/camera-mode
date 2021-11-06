@@ -102,10 +102,10 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityMixinAccess {
     }
 
     @Inject(
-            method = "changeGameMode",
+            method = "setGameMode",
             at = @At("HEAD")
     )
-    protected void camModeDisable(GameMode gameMode, CallbackInfoReturnable<Boolean> cir){
+    protected void camModeDisable(GameMode gameMode, CallbackInfo ci){
         if (camMode)
             ((ServerPlayerEntity) (Object) this).sendMessage(new LiteralText("Swapped gamemodes directly, disabling camera mode"), true);
         camMode = false;

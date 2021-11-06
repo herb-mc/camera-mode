@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.constant.Constable;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -128,7 +127,7 @@ public class CameraConfig {
         return new ArrayList<>(Arrays.asList(CameraMod.configSuggestions));
     }
 
-    private static Constable parseBool(String key, String value) {
+    private static Boolean parseBool(String key, String value) {
         if (!value.matches("(true|false)")) {
             CameraMod.CAMERA_LOGGER.info("Unable to parse value '{}' for '{}'", value, key);
             return null;

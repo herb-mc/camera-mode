@@ -35,7 +35,7 @@ public class CameraConfigCommand {
             .requires((serverCommandSource) -> serverCommandSource.hasPermissionLevel(4))
             .executes((context) -> {
                 context.getSource().sendFeedback(new LiteralText("Reloading configurations"), true);
-                CameraConfig.loadConf(context.getSource().getServer());
+                CameraConfig.loadConf(context.getSource().getMinecraftServer());
                 return 1;
             }))
             .then(CommandManager.literal("set")
@@ -50,7 +50,7 @@ public class CameraConfigCommand {
                     context.getSource().sendFeedback(new LiteralText(context.getArgument("option", String.class) + " set to " + CameraMod.configMaps.get(context.getArgument("option", String.class)).getAsString()), false);
                     CameraMod.CAMERA_LOGGER.info("{}: value of '{}' set to {}", context.getSource().getDisplayName().asString(), context.getArgument("option", String.class), context.getArgument("value", String.class));
                     try {
-                        CameraConfig.overwriteSettingToConf(context.getArgument("option", String.class), temp, context.getSource().getServer());
+                        CameraConfig.overwriteSettingToConf(context.getArgument("option", String.class), temp, context.getSource().getMinecraftServer());
                     } catch (IOException e) {
                         CameraMod.CAMERA_LOGGER.error("Failed write value for '{}' to camera_mode.conf", context.getArgument("option", String.class),  e);
                     }

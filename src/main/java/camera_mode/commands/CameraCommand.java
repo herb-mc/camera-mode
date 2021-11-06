@@ -45,8 +45,8 @@ public class CameraCommand {
             if (CameraMod.consoleLogging.getBool())
                 CameraMod.CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().asString());
             ((ServerPlayerEntityMixinAccess) player).storedData(false, player.getServerWorld(), player.getX(),
-                    player.getY(), player.getZ(), player.getYaw(), player.getPitch());
-            player.changeGameMode(GameMode.SPECTATOR);
+                    player.getY(), player.getZ(), player.headYaw, player.pitch);
+            player.setGameMode(GameMode.SPECTATOR);
             ((ServerPlayerEntityMixinAccess) player).storeCamMode(true);
         }
     }
@@ -56,7 +56,7 @@ public class CameraCommand {
         player.sendMessage(new LiteralText("Exiting camera mode"), true);
         player.teleport(((ServerPlayerEntityMixinAccess) player).storedWorld(), ((ServerPlayerEntityMixinAccess) player).getStoredX(), ((ServerPlayerEntityMixinAccess) player).getStoredY(), ((ServerPlayerEntityMixinAccess) player).getStoredZ(), ((ServerPlayerEntityMixinAccess) player).getStoredYaw(), ((ServerPlayerEntityMixinAccess) player).getStoredPitch());
         ((ServerPlayerEntityMixinAccess) player).storeCamMode(false);
-        player.changeGameMode(GameMode.SURVIVAL);
+        player.setGameMode(GameMode.SURVIVAL);
     }
 
 }
