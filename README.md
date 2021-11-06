@@ -1,6 +1,6 @@
 # Herb's Camera Mode
 
-A survival-friendly spectator mode with configurable restrictions, based off of the /cam and /cs Carpet scripts. Requires Fabric 0.41.0+1.17. Does not require Fabric API.
+A survival-friendly spectator mode with configurable restrictions, based off of the /cam and /cs Carpet scripts. Does not require Fabric API.
 
 ## Configuration
 A configuration file (path: `.minecraft/saves/[save]/camera_mode.conf`) will be generated in your save directory if it does not exist yet on world loading. This can be edited directly or in-game via command.\
