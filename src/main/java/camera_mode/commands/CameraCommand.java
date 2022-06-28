@@ -44,7 +44,7 @@ public class CameraCommand {
             player.sendMessage(new LiteralText("Entering camera mode"), true);
             if (CameraMod.consoleLogging.getBool())
                 CameraMod.CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().asString());
-            ((ServerPlayerEntityMixinAccess) player).storedData(false, player.getServerWorld(), player.getX(),
+            ((ServerPlayerEntityMixinAccess) player).storedData(false, player.getWorld(), player.getX(),
                     player.getY(), player.getZ(), player.getYaw(), player.getPitch());
             player.changeGameMode(GameMode.SPECTATOR);
             ((ServerPlayerEntityMixinAccess) player).storeCamMode(true);
