@@ -3,6 +3,7 @@ package camera_mode.mixins;
 import camera_mode.commands.CameraCommand;
 import camera_mode.commands.CameraConfigCommand;
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import org.spongepowered.asm.mixin.Final;
@@ -26,7 +27,7 @@ public abstract class CommandManagerMixin {
             method = "<init>",
             at = @At("RETURN")
     )
-    private void onRegister(CommandManager.RegistrationEnvironment arg, CallbackInfo ci) {
+    private void onRegister(CommandManager.RegistrationEnvironment environment, CommandRegistryAccess commandRegistryAccess, CallbackInfo ci) {
         CameraCommand.register(this.dispatcher);
         CameraConfigCommand.register(this.dispatcher);
         CAMERA_LOGGER.info("Camera commands successfully loaded");
