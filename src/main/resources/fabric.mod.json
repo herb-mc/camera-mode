@@ -9,8 +9,7 @@
     "herb_mc"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/herb-mc/camera-mode"
   },
 
   "license": "MIT",
@@ -25,11 +24,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.12.8",
-    "minecraft": "1.18.x",
+    "fabricloader": ">=0.14.8",
+    "minecraft": "1.19.x",
     "java": ">=17"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }
