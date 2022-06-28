@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.SpectatorTeleportC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,11 +31,11 @@ public class ServerPlayNetworkHandlerMixin {
     )
     protected void disableCamTeleport(SpectatorTeleportC2SPacket packet, CallbackInfo ci, Iterator var2, ServerWorld serverWorld, Entity entity) {
         if (((ServerPlayerEntityMixinAccess)(((ServerPlayNetworkHandler) (Object) this).player)).camMode() && !CameraMod.canTeleport.getBool()) {
-            ((ServerPlayNetworkHandler) (Object) this).player.sendMessage(new LiteralText("Teleportation is disabled in camera mode"), true);
+            ((ServerPlayNetworkHandler) (Object) this).player.sendMessage(Text.literal("Teleportation is disabled in camera mode"), true);
             ci.cancel();
         }
         else if (CameraMod.consoleLogging.getBool())
-            CAMERA_LOGGER.info("{} teleported to {} while in camera mode", ((ServerPlayNetworkHandler) (Object) this).player.getDisplayName().asString(), entity.getDisplayName().asString());
+            CAMERA_LOGGER.info("{} teleported to {} while in camera mode", ((ServerPlayNetworkHandler) (Object) this).player.getDisplayName().getString(), entity.getDisplayName().getString());
     }
 
 }

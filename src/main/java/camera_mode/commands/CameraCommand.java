@@ -7,7 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.world.GameMode;
 
 public class CameraCommand {
@@ -24,11 +24,11 @@ public class CameraCommand {
                 else if (player.interactionManager.getGameMode() == GameMode.SPECTATOR && ((ServerPlayerEntityMixinAccess) player).camMode())
                     swapSurvival(source);
                 else if (player.interactionManager.getGameMode() != GameMode.SURVIVAL && player.interactionManager.getGameMode() != GameMode.SPECTATOR) {
-                    player.sendMessage(new LiteralText("You must be in survival mode to swap to camera mode"), true);
+                    player.sendMessage(Text.literal("You must be in survival mode to swap to camera mode"), true);
                     return 0;
                 }
                 else {
-                    player.sendMessage(new LiteralText("You may only swap back to survival mode from spectator mode if you entered camera mode beforehand"), true);
+                    player.sendMessage(Text.literal("You may only swap back to survival mode from spectator mode if you entered camera mode beforehand"), true);
                     return 0;
                 }
                 return 1;
@@ -39,11 +39,11 @@ public class CameraCommand {
     public static void swapCamera(ServerCommandSource source) throws CommandSyntaxException {
         ServerPlayerEntity player = source.getPlayer();
         if (player.getVehicle() != null) {
-            player.sendMessage(new LiteralText("Exit vehicles before entering camera mode"), true);
+            player.sendMessage(Text.literal("Exit vehicles before entering camera mode"), true);
         } else {
-            player.sendMessage(new LiteralText("Entering camera mode"), true);
+            player.sendMessage(Text.literal("Entering camera mode"), true);
             if (CameraMod.consoleLogging.getBool())
-                CameraMod.CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().asString());
+                CameraMod.CAMERA_LOGGER.info("{} entered camera mode", player.getDisplayName().getString());
             ((ServerPlayerEntityMixinAccess) player).storedData(false, player.getWorld(), player.getX(),
                     player.getY(), player.getZ(), player.getYaw(), player.getPitch());
             player.changeGameMode(GameMode.SPECTATOR);
@@ -53,7 +53,7 @@ public class CameraCommand {
 
     public static void swapSurvival(ServerCommandSource source) throws CommandSyntaxException {
         ServerPlayerEntity player = source.getPlayer();
-        player.sendMessage(new LiteralText("Exiting camera mode"), true);
+        player.sendMessage(Text.literal("Exiting camera mode"), true);
         player.teleport(((ServerPlayerEntityMixinAccess) player).storedWorld(), ((ServerPlayerEntityMixinAccess) player).getStoredX(), ((ServerPlayerEntityMixinAccess) player).getStoredY(), ((ServerPlayerEntityMixinAccess) player).getStoredZ(), ((ServerPlayerEntityMixinAccess) player).getStoredYaw(), ((ServerPlayerEntityMixinAccess) player).getStoredPitch());
         ((ServerPlayerEntityMixinAccess) player).storeCamMode(false);
         player.changeGameMode(GameMode.SURVIVAL);

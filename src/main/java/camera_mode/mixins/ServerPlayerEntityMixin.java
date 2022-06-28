@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -94,11 +94,11 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityMixinAccess {
     )
     protected void disableCamEntitySpectating(Entity target, CallbackInfo ci) {
         if (camMode && !CameraMod.canSpectate.getBool()) {
-            ((ServerPlayerEntity) (Object) this).sendMessage(new LiteralText("Entity spectating is disabled in camera mode"), true);
+            ((ServerPlayerEntity) (Object) this).sendMessage(Text.literal("Entity spectating is disabled in camera mode"), true);
             ci.cancel();
         }
         else if (CameraMod.consoleLogging.getBool())
-            CAMERA_LOGGER.info("{} is spectating {}", ((ServerPlayerEntity) (Object) this).getDisplayName().asString(), target.getDisplayName().asString().isEmpty() ? target.getEntityName() : target.getDisplayName().asString());
+            CAMERA_LOGGER.info("{} is spectating {}", ((ServerPlayerEntity) (Object) this).getDisplayName().getString(), target.getDisplayName().getString().isEmpty() ? target.getEntityName() : target.getDisplayName().getString());
     }
 
     @Inject(
@@ -107,7 +107,7 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityMixinAccess {
     )
     protected void camModeDisable(GameMode gameMode, CallbackInfoReturnable<Boolean> cir){
         if (camMode)
-            ((ServerPlayerEntity) (Object) this).sendMessage(new LiteralText("Swapped gamemodes directly, disabling camera mode"), true);
+            ((ServerPlayerEntity) (Object) this).sendMessage(Text.literal("Swapped gamemodes directly, disabling camera mode"), true);
         camMode = false;
     }
 
